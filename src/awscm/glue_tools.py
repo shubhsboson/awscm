@@ -28,6 +28,26 @@ def monitor_glue_jobs(**kwargs):
     job_status_list = get_job_status(job_run_details_list)
     return job_status_list
 
+def monitor_glue_job(job_name, **kwargs):
+    """
+    Fetches job status for job_name in given/default region.
+    --------------------------------------------------------
+    Optional Parameter: named argument 'region'
+    Ex - 
+            monitor_glue_job('testJob')
+            monitor_glue_jobs('testJob'region='us-east-1')
+    ________________________________________________________
+    Returns a dictionary with 'JobName' and 'Status'
+    --------------------------------------------------------
+    Note:-  If the job StartDate doesn't match datetime.date.today(),
+            'YET TO START' is returned as status.
+            Else 'JobRunState' is returned. 
+    """
+    aws = get_aws_client('glue', **kwargs)
+    job_run_details = get_job_run_details([job_name], **kwargs)
+    job_status = get_job_status(job_run_details)
+    return job_status[0]
+
 
 def get_job_list(**kwargs):
     """
