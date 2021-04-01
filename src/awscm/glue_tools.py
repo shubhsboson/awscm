@@ -6,6 +6,20 @@ from awscm.aws_client import get_aws_client
 
 
 def monitor_glue_jobs(**kwargs):
+    """
+    Fetches job status for all jobs in given/default region.
+    --------------------------------------------------------
+    Optional Parameter: named argument 'region'
+    Ex - 
+            monitor_glue_jobs()
+            monitor_glue_jobs(region='us-east-1')
+    ________________________________________________________
+    Returns a list of dictionary with 'JobName' and 'Status'
+    --------------------------------------------------------
+    Note:-  If the job StartDate doesn't match datetime.date.today(),
+            'YET TO START' is returned as status.
+            Else 'JobRunState' is returned. 
+    """
     aws = get_aws_client('glue', **kwargs)
     job_list = get_job_list(**kwargs)
     # print(job_list)            # for debugging
