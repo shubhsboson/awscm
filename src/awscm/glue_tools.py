@@ -6,13 +6,13 @@ from awscm.aws_client import get_aws_client
 
 
 def monitor_glue_jobs(**kwargs):
-    aws = get_aws_client('glue',**kwargs)
+    aws = get_aws_client('glue', **kwargs)
     job_list = get_job_list(**kwargs)
     # print(job_list)            # for debugging
     job_run_details_list = get_job_run_details(job_list, **kwargs)
     # print(job_run_details_list)    # for debugging
     job_status_list = get_job_status(job_run_details_list)
-    print(job_status_list)
+    return job_status_list
 
 
 def get_job_list(**kwargs):
