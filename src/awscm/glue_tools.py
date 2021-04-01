@@ -30,10 +30,11 @@ def monitor_glue_job(job_name, **kwargs):
     """
     Fetches job status for job_name in given/default region.
     --------------------------------------------------------
+    Required Parameter: job_name - type: String
     Optional Parameter: named argument 'region'
     Ex - 
             monitor_glue_job('testJob')
-            monitor_glue_jobs('testJob'region='us-east-1')
+            monitor_glue_job('testJob', region='us-east-1')
     ________________________________________________________
     Returns a dictionary with 'JobName' and 'Status'
     --------------------------------------------------------
@@ -49,10 +50,15 @@ def monitor_glue_job(job_name, **kwargs):
 
 def get_job_list(**kwargs):
     """
-    Fetches names of all glue jobs.
-    Note:- This is region specific based on aws object.
-    Parameter: aws object
+    Fetches names of all glue jobs in given/default region.
+    _______________________________________________________
+    Optional Parameter: named argument 'region'
+    Ex - 
+            get_job_list()
+            get_job_list(region='us-east-1')
+    _______________________________________________________
     Returns: List of all glue jobs.
+    -------------------------------------------------------
     """
     aws = get_aws_client('glue', **kwargs)
     job_list = []
@@ -64,10 +70,16 @@ def get_job_list(**kwargs):
 
 def get_job_run_details(job_list, **kwargs):
     """
-    Fetches latest run details of all the glue jobs present in the list.
-    Note:- This is region specific based on aws object.
-    Parameter: aws object , job_list
+    Fetches latest run details of glue jobs in given list , uses default/given region.
+    ----------------------------------------------------------------------------------
+    Required Parameter: job_list - type: List
+    Optional Parameter: named argument 'region'
+    Ex - 
+            get_job_run_details(job_list)
+            get_job_run_details(job_list, region='us-east-1')
+    ----------------------------------------------------------------------------------
     Returns: List of dictionaries of run details for all glue jobs.
+    ----------------------------------------------------------------------------------
     """
     aws = get_aws_client('glue', **kwargs)
     job_run_details = []
