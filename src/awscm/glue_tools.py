@@ -22,9 +22,7 @@ def monitor_glue_jobs(**kwargs):
     """
     aws = get_aws_client('glue', **kwargs)
     job_list = get_job_list(**kwargs)
-    # print(job_list)            # for debugging
     job_run_details_list = get_job_run_details(job_list, **kwargs)
-    # print(job_run_details_list)    # for debugging
     job_status_list = get_job_status(job_run_details_list)
     return job_status_list
 
@@ -75,7 +73,6 @@ def get_job_run_details(job_list, **kwargs):
     job_run_details = []
     for job in job_list:
         job_run_details.append(aws.get_job_runs(JobName=job, MaxResults=1))
-    # print(job_run_details)     # for debugging
     return job_run_details
 
 
@@ -90,6 +87,5 @@ def get_job_status(job_run_details_list):
             job_status_details['Status'] = 'YET TO START'
         else:
             job_status_details['Status'] = job['JobRuns'][0]['JobRunState']
-        # print(job_status_details)    # for debugging
         job_status_list.append(job_status_details)
     return job_status_list
