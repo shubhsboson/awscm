@@ -89,6 +89,19 @@ def get_job_run_details(job_list, **kwargs):
 
 
 def get_job_status(job_run_details_list):
+    """
+    Processes the given list of dictionaries of glue job run details.
+    -----------------------------------------------------------------
+    Required Parameter: job_run_details_list
+    Ex - 
+            get_job_status(job_run_details_list)
+    ________________________________________________________
+    Returns a list of dictionary with 'JobName' and 'Status'
+    --------------------------------------------------------
+    Note:-  If the job StartDate doesn't match datetime.date.today(),
+            'YET TO START' is returned as status.
+            Else 'JobRunState' is returned.
+    """
     import datetime
     today = datetime.date.today()
     job_status_list = []
