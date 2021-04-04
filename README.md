@@ -6,3 +6,9 @@ a python project for easy monitoring of aws jobs, services, alarms and other thi
 
 # Install
 > `pip3 install awscm`
+
+# Want to Help
+Checkout our [CONTRIBUTING.md](/CONTRIBUTING.md)
+
+# This project pledges by the "Covenant Code of Conduct" and so must you.
+Read more here [CODE_OF_CONDUCT.md](/CODE_OF_CONDUCT.md)
