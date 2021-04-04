@@ -16,3 +16,5 @@ you make any changes.
 Though if you make any changes to setup.py or setup.cfg
 you will have to rerun the install command.
 
+**Don't forget to add your name with github profile link in our [CONTRIBUTING.md](/CONTRIBUTING.md)**
+
