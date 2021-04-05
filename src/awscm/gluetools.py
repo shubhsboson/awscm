@@ -2,7 +2,7 @@
 Contains a set of tools required to monitor and manage glue jobs 
 """
 
-from awscm.aws_client import get_aws_client
+from awscm.awsclient import get_aws_client
 
 
 def monitor_glue_jobs(**kwargs):
