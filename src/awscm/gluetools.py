@@ -2,10 +2,10 @@
 Contains a set of tools required to monitor and manage glue jobs 
 """
 
-from awscm.awsclient import get_aws_client
+from awscm.awstools import get_aws_client
 
 
-def monitor_glue_jobs(**kwargs):
+def monitor_glue_jobs(aws_session, job_list=[], **kwargs):
     """
     Fetches job status for all jobs in given/default region.
     --------------------------------------------------------
@@ -20,13 +20,13 @@ def monitor_glue_jobs(**kwargs):
             'YET TO START' is returned as status.
             Else 'JobRunState' is returned. 
     """
-    aws = get_aws_client('glue', **kwargs)
-    job_list = get_job_list(**kwargs)
-    job_run_details_list = get_job_run_details(job_list, **kwargs)
+    if job_list == []:
+        job_list = get_job_list(aws_session, **kwargs)
+    job_run_details_list = get_job_run_details(aws_session, job_list, **kwargs)
     job_status_list = get_job_status(job_run_details_list)
     return job_status_list
 
-def monitor_glue_job(job_name, **kwargs):
+def monitor_glue_job(aws_session, job_name, **kwargs):
     """
     Fetches job status for job_name in given/default region.
     --------------------------------------------------------
@@ -42,13 +42,12 @@ def monitor_glue_job(job_name, **kwargs):
             'YET TO START' is returned as status.
             Else 'JobRunState' is returned. 
     """
-    aws = get_aws_client('glue', **kwargs)
-    job_run_details = get_job_run_details([job_name], **kwargs)
+    job_run_details = get_job_run_details(aws_session, [job_name], **kwargs)
     job_status = get_job_status(job_run_details)
     return job_status[0]
 
 
-def get_job_list(**kwargs):
+def get_job_list(aws_session,**kwargs):
     """
     Fetches names of all glue jobs in given/default region.
     _______________________________________________________
@@ -60,15 +59,15 @@ def get_job_list(**kwargs):
     Returns: List of all glue jobs.
     -------------------------------------------------------
     """
-    aws = get_aws_client('glue', **kwargs)
+    aws_client = get_aws_client(aws_session, 'glue', **kwargs)
     job_list = []
-    jobs = aws.get_jobs()
+    jobs = aws_client.get_jobs()
     for job in jobs['Jobs']:
         job_list.append(job['Name'])
     return job_list
 
 
-def get_job_run_details(job_list, **kwargs):
+def get_job_run_details(aws_session, job_list, **kwargs):
     """
     Fetches latest run details of glue jobs in given list , uses default/given region.
     ----------------------------------------------------------------------------------
@@ -81,10 +80,10 @@ def get_job_run_details(job_list, **kwargs):
     Returns: List of dictionaries of run details for all glue jobs.
     ----------------------------------------------------------------------------------
     """
-    aws = get_aws_client('glue', **kwargs)
+    aws_client = get_aws_client(aws_session, 'glue', **kwargs)
     job_run_details = []
     for job in job_list:
-        job_run_details.append(aws.get_job_runs(JobName=job, MaxResults=1))
+        job_run_details.append(aws_client.get_job_runs(JobName=job, MaxResults=1))
     return job_run_details
 
 
