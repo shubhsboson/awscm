@@ -1,7 +1,8 @@
 """Module contains generally used supporting functions."""
 
-import os
 import logging
+import os
+
 
 def logger() -> logging:
     """Returns a logger object."""
