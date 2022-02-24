@@ -20,7 +20,8 @@ def test_setup(monkeypatch):
     # Ensure stray default session isn't used.
     monkeypatch.setattr("boto3.DEFAULT_SESSION", None)
 
+
 @pytest.fixture
 def mock_session(test_setup):
     """Returns a mock aws session object."""
-    return get_aws_session(profile_name='test_profile')
+    return get_aws_session(profile_name="test_profile")
